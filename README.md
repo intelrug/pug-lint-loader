@@ -22,14 +22,10 @@ module.exports = {
       {
         enforce: 'pre',
         test: /\.pug$/,
-        exclude: /node_modules/,
-        loader: '@intelrug/pug-lint-loader',
-        options: {
-          config: require('./.pug-lintrc.js'),
-        },
-      },
-    ],
-  },
+        loader: '@intelrug/pug-lint-loader'
+      }
+    ]
+  }
   // ...
 }
 ```
@@ -39,9 +35,29 @@ by other loaders (like `pug-loader`)
 
 ### Options
 
-You can pass [puglint options](https://github.com/pugjs/pug-lint#configuration-file)
-using standard webpack [loader options](https://webpack.js.org/configuration/module/#useentry).
+You can pass [pug-lint options](https://github.com/pugjs/pug-lint#configuration-file) in `config` property.
+By default the loader will search for the pug-lint config in the root directory of your project.
 
+```js
+module.exports = {
+  // ...
+  module: {
+    rules: [
+      {
+        enforce: 'pre',
+        test: /\.pug$/,
+        loader: '@intelrug/pug-lint-loader',
+        options: {
+          config: {
+            requireLowerCaseTags: true
+          }
+        }
+      }
+    ]
+  }
+  // ...
+}
+```
 
 #### Errors or Warning?
 
@@ -59,15 +75,13 @@ module.exports = {
       {
         enforce: 'pre',
         test: /\.pug$/,
-        exclude: /node_modules/,
         loader: '@intelrug/pug-lint-loader',
         options: {
-          config: require('./.pug-lintrc.js'),
-          emitError: true,
-        },
-      },
-    ],
-  },
+          emitError: true
+        }
+      }
+    ]
+  }
   // ...
 }
 ```

@@ -1,6 +1,7 @@
 import PugLint from 'pug-lint';
-import { getOptions } from 'loader-utils';
+import configFile from 'pug-lint/lib/config-file';
 import validateOptions from 'schema-utils';
+import { getOptions } from 'loader-utils';
 
 const linter = new PugLint();
 
@@ -25,7 +26,12 @@ export default function (content) {
 
   validateOptions(schema, options, '@intelrug/pug-lint-loader');
 
-  linter.configure(options.config || {});
+  if (options.config) {
+    linter.configure(options.config);
+  } else {
+    linter.configure(configFile.load(null, this.rootContext));
+  }
+
   let errors = linter.checkString(content);
 
   if (errors.length > 0) {
